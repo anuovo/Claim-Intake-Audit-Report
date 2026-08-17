@@ -8,22 +8,83 @@
   </head>
   <body>
     <div class="app-shell">
-      <main class="content">
-        <header class="topbar">
-          <div class="topbar-meta">
-            <div class="datestamp">Wednesday, Jun 24, 2026 | 02:25 PM</div>
-            <h1>Claims Intake Audit Report</h1>
-            <p>
-              High-level view of each line item on a trouble ticket that has been
-              flagged.
-            </p>
+      <div class="global-header-bar"></div>
+      <div class="workspace-shell">
+        <aside class="primary-nav">
+          <div class="brand-lockup">GROWER<span>STOCK</span></div>
+          <nav class="primary-nav-menu">
+            <a href="#" class="primary-nav-item primary-nav-item-manager"><span class="primary-nav-icon"></span><span class="primary-nav-label">Manager</span></a>
+            <a href="#" class="primary-nav-item primary-nav-item-eprice"><span class="primary-nav-icon"></span><span class="primary-nav-label">ePrice Sheet</span></a>
+            <a href="#" class="primary-nav-item primary-nav-item-reports"><span class="primary-nav-icon"></span><span class="primary-nav-label">Reports &amp; Insights</span></a>
+            <a href="#" class="primary-nav-item primary-nav-item-ticket primary-nav-item-active"><span class="primary-nav-icon"></span><span class="primary-nav-label">Ticket System</span></a>
+            <a href="#" class="primary-nav-item primary-nav-item-program"><span class="primary-nav-icon"></span><span class="primary-nav-label">Program Hub</span></a>
+            <a href="#" class="primary-nav-item primary-nav-item-account"><span class="primary-nav-icon"></span><span class="primary-nav-label">Account &amp; Settings</span></a>
+            <a href="#" class="primary-nav-item primary-nav-item-switch"><span class="primary-nav-icon"></span><span class="primary-nav-label">Switch Admin</span></a>
+          </nav>
+        </aside>
+
+        <aside class="secondary-nav">
+          <div class="profile-card">
+            <div class="profile-avatar">RF</div>
+            <div class="profile-copy">
+              <strong>RF (Sandbox)</strong>
+              <span>Good Afternoon</span>
+              <span>Vince!</span>
+            </div>
           </div>
-          <div class="topbar-actions">
-            <button class="action-button secondary" id="exportCsv">Export CSV</button>
-            <button class="action-button secondary" id="exportExcel">Export Excel</button>
-            <button class="action-button primary">Save Report</button>
+
+          <div class="ticket-menu-card">
+            <div class="ticket-menu-head">Tickets</div>
+            <div class="ticket-menu-body">
+              <a href="#" class="ticket-menu-link">All Tickets (21)</a>
+              <a href="#" class="ticket-menu-link">My Tickets (11)</a>
+              <a href="#" class="ticket-menu-link">Tickets I've been flagged on (1)</a>
+
+              <div class="ticket-menu-divider"></div>
+
+              <a href="#" class="ticket-menu-link">Open (11)</a>
+              <a href="#" class="ticket-menu-link">Pending Customer Final (7)</a>
+              <a href="#" class="ticket-menu-link">Approver (3)</a>
+
+              <div class="ticket-menu-divider"></div>
+
+              <a href="#" class="ticket-menu-link">Closed Tickets (17)</a>
+
+              <div class="ticket-menu-divider ticket-menu-divider-spaced"></div>
+
+              <div class="ticket-menu-section-label">Reports</div>
+              <a href="#" class="ticket-menu-report-link ticket-menu-report-link-active">Claims Intake Report</a>
+            </div>
           </div>
-        </header>
+        </aside>
+
+        <main class="workspace-main">
+          <header class="workspace-header">
+            <div class="workspace-heading">
+              <div class="datestamp">Monday, Aug 17, 2026 | 03:29 PM</div>
+              <h1>Trouble Tickets</h1>
+            </div>
+            <div class="workspace-utilities">
+              <span class="utility-item utility-pal">PAL<span class="utility-stars">✧</span></span>
+              <span class="utility-item utility-notifications">Notifications<span class="utility-badge">1</span><span class="utility-bell">🔔</span></span>
+              <span class="utility-item utility-messages">Messages<span class="utility-envelope">✉</span></span>
+            </div>
+          </header>
+
+          <section class="report-stage">
+            <div class="content">
+              <header class="topbar">
+                <div class="topbar-meta">
+                  <h2 class="report-title">Claims Intake Audit Report</h2>
+                  <p>
+                    High-level view of each line item on a trouble ticket that has been
+                    flagged.
+                  </p>
+                </div>
+                <div class="topbar-actions">
+                  <button class="action-button secondary" id="exportExcel">Export Excel</button>
+                </div>
+              </header>
 
         <section class="panel filter-panel">
           <div class="filter-grid">
@@ -219,7 +280,6 @@
               <h2>Ticket Line Items</h2>
               <p id="tableSummary">0 flagged line items</p>
             </div>
-            <button class="text-button">Customize Columns</button>
           </div>
 
           <div class="table-wrap">
@@ -270,7 +330,10 @@
             Date.
           </div>
         </section>
-      </main>
+            </div>
+          </section>
+        </main>
+      </div>
     </div>
 
     <script src="app.js"></script>

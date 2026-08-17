@@ -485,8 +485,8 @@ function renderNetImpactMarkup(value, variant = "table") {
   const amount = state === "even" ? "$0.00" : formatCurrency(Math.abs(value));
   return `
     <span class="net-impact net-impact-${variant} net-impact-${state}">
-      <span class="net-impact-label">${label}</span>
       <span class="net-impact-amount">${amount}</span>
+      <span class="net-impact-badge">${label}</span>
     </span>
   `;
 }
@@ -1097,7 +1097,6 @@ function attachEvents() {
     });
   });
 
-  document.getElementById("exportCsv").addEventListener("click", () => exportRows("csv"));
   document.getElementById("exportExcel").addEventListener("click", () => exportRows("excel"));
 }
 
