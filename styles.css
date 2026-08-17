@@ -35,7 +35,7 @@ body {
   display: flex;
   gap: 20px;
   justify-content: space-between;
-  margin-bottom: 22px;
+  margin-bottom: 16px;
 }
 
 .datestamp {
@@ -61,21 +61,21 @@ h1 {
 .topbar-actions {
   display: flex;
   gap: 10px;
-  padding-top: 18px;
+  padding-top: 8px;
 }
 
 .panel {
   background: rgba(255, 255, 255, 0.96);
   border: 1px solid rgba(218, 223, 230, 0.92);
   border-radius: 16px;
-  box-shadow: var(--shadow);
-  margin-bottom: 14px;
-  padding: 18px 20px;
+  box-shadow: 0 10px 24px rgba(16, 24, 40, 0.05);
+  margin-bottom: 12px;
+  padding: 16px 18px;
 }
 
 .filter-grid {
   display: grid;
-  gap: 16px 22px;
+  gap: 12px 16px;
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
@@ -86,7 +86,7 @@ h1 {
 
 .field span {
   color: #303844;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 700;
 }
 
@@ -98,7 +98,7 @@ select {
   border-radius: 6px;
   color: #27303b;
   font: inherit;
-  min-height: 42px;
+  min-height: 40px;
   padding: 0 12px;
   width: 100%;
 }
@@ -120,7 +120,7 @@ select {
   display: flex;
   gap: 10px;
   justify-content: flex-end;
-  margin-top: 18px;
+  margin-top: 12px;
 }
 
 .action-button {
@@ -133,65 +133,81 @@ select {
   padding: 0 16px;
 }
 
+.action-button.secondary {
+  background: #f8fafc;
+  border-color: #dbe2ea;
+  color: #4b5565;
+}
+
+.action-button.ghost {
+  background: #f8fafc;
+  border-color: #dbe2ea;
+  color: #6b7280;
+}
+
 .action-button.primary {
+  background: #eef3f8;
+  border-color: #d3dde8;
+  color: #223043;
+}
+
+#applyFilters {
   background: #4a89f1;
   color: #fff;
 }
 
-.action-button.secondary {
-  background: #fff;
-  border-color: #cfd6dd;
-  color: #26323f;
-}
-
-.action-button.ghost {
-  background: #fff;
-  border-color: #d8dee6;
-  color: #495361;
-}
-
-.metrics-panel {
+.metrics-panel,
+.financial-primary-grid {
   display: grid;
   background: #fff;
   border: 1px solid rgba(218, 223, 230, 0.92);
   border-radius: 16px;
-  box-shadow: var(--shadow);
+  box-shadow: 0 10px 24px rgba(16, 24, 40, 0.05);
   gap: 0;
   grid-template-columns: repeat(7, minmax(0, 1fr));
   margin-bottom: 16px;
   overflow: hidden;
-  padding: 4px 0;
+  padding: 0;
 }
 
 .financial-kpi-block {
-  margin-bottom: 16px;
+  margin-bottom: 12px;
 }
 
 .section-heading {
-  margin: 0 0 10px;
+  margin: 0 0 8px;
 }
 
 .section-heading h2 {
   color: #223043;
-  font-size: 18px;
-  margin: 0 0 4px;
+  font-size: 16px;
+  margin: 0 0 2px;
 }
 
 .section-heading p {
   color: #667085;
-  font-size: 13px;
+  font-size: 12px;
   margin: 0;
 }
 
+.section-heading-quiet {
+  opacity: 0.84;
+}
+
+.financial-primary-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-bottom: 12px;
+}
+
 .metric-card {
-  align-items: center;
+  align-items: flex-start;
   background: transparent;
   border-right: 1px solid #e6ebf1;
   display: flex;
   gap: 10px;
-  justify-content: center;
-  min-height: 88px;
-  padding: 14px 10px;
+  justify-content: flex-start;
+  min-height: 84px;
+  padding: 16px 14px 14px;
   text-align: left;
 }
 
@@ -220,7 +236,7 @@ select {
 
 .metric-copy {
   display: grid;
-  gap: 2px;
+  gap: 4px;
   min-width: 0;
 }
 
@@ -229,8 +245,50 @@ select {
   display: block;
   font-size: 22px;
   font-weight: 700;
-  line-height: 1;
+  letter-spacing: -0.03em;
+  line-height: 0.96;
   min-height: 24px;
+}
+
+.metric-card-primary {
+  min-height: 116px;
+  padding: 18px 18px 16px;
+}
+
+.metric-card-primary .metric-value {
+  font-size: 34px;
+  min-height: 34px;
+}
+
+.metric-card-primary .metric-label {
+  font-size: 13px;
+}
+
+.metric-card-secondary {
+  min-height: 78px;
+  padding: 14px 12px;
+}
+
+.metric-card-secondary .metric-value {
+  font-size: 20px;
+}
+
+.metric-card-tertiary {
+  opacity: 0.72;
+}
+
+.metric-card-claimed .metric-value,
+.metric-card-rate .metric-value {
+  color: #1f4f8f;
+}
+
+.metric-card-recovered .metric-value {
+  color: #1f8f43;
+}
+
+.metric-card-net-impact .metric-value,
+.metric-card-net-impact .net-impact-loss {
+  color: #d25b16;
 }
 
 .net-impact {
@@ -286,61 +344,110 @@ select {
   white-space: nowrap;
 }
 
-.financial-metrics-panel {
-  grid-template-columns: repeat(6, minmax(0, 1fr));
-}
-
 .insights-grid {
   display: grid;
-  gap: 14px;
-  margin-bottom: 14px;
+  gap: 12px;
+  margin-bottom: 12px;
 }
 
-.charts-grid {
-  grid-template-columns: 1.6fr 1fr 1fr 1fr;
+.claims-overview-panel {
+  margin-bottom: 12px;
+  padding: 14px 0 12px;
 }
 
-.six-card-grid {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+.claims-overview-heading {
+  margin: 0 18px 8px;
 }
 
-.trend-top-grid {
-  grid-template-columns: 1fr;
+.claims-overview-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 50fr) minmax(0, 28fr) minmax(0, 22fr);
+  min-height: 292px;
 }
 
-.trend-top-grid .insight-card-wide {
-  width: 100%;
+.claims-overview-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+  padding: 6px 18px 4px;
+}
+
+.claims-overview-section + .claims-overview-section {
+  border-left: 1px solid #e7edf4;
+}
+
+.claims-overview-section h3 {
+  color: #1f2937;
+  font-size: 16px;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.claims-overview-trend .line-chart {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.analysis-grid {
+  align-items: stretch;
+  grid-template-columns: minmax(0, 2fr) minmax(300px, 1fr);
+  grid-template-areas:
+    "trend reason"
+    "trend aging";
+}
+
+.analysis-grid .insight-card:nth-child(1) {
+  grid-area: trend;
+}
+
+.analysis-grid .insight-card:nth-child(2) {
+  grid-area: reason;
+}
+
+.analysis-grid .insight-card:nth-child(3) {
+  grid-area: aging;
+}
+
+.concentration-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
 .insight-card {
   background: #fff;
   border: 1px solid #e3e8ef;
   border-radius: 16px;
-  box-shadow: 0 8px 24px rgba(16, 24, 40, 0.05);
-  min-height: 230px;
-  padding: 18px 18px 16px;
+  box-shadow: 0 8px 20px rgba(16, 24, 40, 0.04);
+  min-height: 200px;
+  padding: 16px 16px 14px;
 }
 
 .insight-card h3 {
   color: #1f2937;
-  font-size: 17px;
-  margin: 0 0 18px;
+  font-size: 16px;
+  margin: 0 0 12px;
 }
 
 .insight-card-wide {
   min-width: 0;
 }
 
+.insight-card-trend {
+  min-height: 252px;
+}
+
 .rank-list,
 .trend-list {
   display: grid;
-  gap: 12px;
+  gap: 8px;
 }
 
 .rank-row,
 .trend-row {
   display: grid;
-  gap: 8px;
+  gap: 6px;
 }
 
 .rank-meta,
@@ -388,7 +495,7 @@ select {
 }
 
 .chart-list {
-  padding-top: 6px;
+  padding-top: 2px;
 }
 
 #initialReasonInsight .rank-value {
@@ -476,7 +583,7 @@ select {
 
 .line-chart svg {
   display: block;
-  height: 220px;
+  height: 216px;
   width: 100%;
 }
 
@@ -533,7 +640,8 @@ select {
   align-items: center;
   display: flex;
   justify-content: space-between;
-  margin-bottom: 10px;
+  gap: 10px;
+  margin-bottom: 6px;
 }
 
 .trend-kicker {
@@ -546,7 +654,7 @@ select {
 
 .trend-stat {
   color: #213245;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 700;
   margin-top: 2px;
 }
@@ -562,8 +670,31 @@ select {
 }
 
 .summary-table-card {
-  min-height: 166px;
+  min-height: 184px;
   padding-bottom: 10px;
+}
+
+.claims-overview-section .chart-list {
+  gap: 8px;
+  padding-top: 0;
+}
+
+.claims-overview-section .rank-meta {
+  font-size: 12px;
+  gap: 8px;
+}
+
+.claims-overview-section .rank-name {
+  font-weight: 600;
+}
+
+.claims-overview-section .rank-value {
+  margin-left: auto;
+  text-align: right;
+}
+
+.claims-overview-section .rank-bar {
+  height: 9px;
 }
 
 .summary-mini-table {
@@ -603,7 +734,7 @@ select {
   display: inline-block;
   font-size: 12px;
   font-weight: 700;
-  margin-top: 8px;
+  margin-top: 6px;
   text-decoration: none;
 }
 
@@ -616,7 +747,7 @@ select {
 }
 
 .table-header {
-  margin-bottom: 14px;
+  margin-bottom: 10px;
 }
 
 h2 {
@@ -641,6 +772,10 @@ h2 {
   border-collapse: collapse;
   min-width: 1380px;
   width: 100%;
+}
+
+.table-panel {
+  box-shadow: 0 8px 18px rgba(16, 24, 40, 0.035);
 }
 
 .table-panel thead th {
@@ -678,7 +813,7 @@ h2 {
   color: #475467;
   font-size: 14px;
   gap: 18px;
-  margin-top: 16px;
+  margin-top: 12px;
 }
 
 .pagination-tools {
@@ -725,9 +860,9 @@ h2 {
   background: #e8f0fb;
   border-radius: 8px;
   color: #42648f;
-  font-size: 15px;
-  margin-top: 16px;
-  padding: 12px 14px;
+  font-size: 14px;
+  margin-top: 12px;
+  padding: 10px 12px;
 }
 
 .badge {
@@ -745,9 +880,23 @@ h2 {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
-  .charts-grid,
-  .six-card-grid {
+  .claims-overview-grid {
+    grid-template-columns: minmax(0, 50fr) minmax(0, 28fr) minmax(0, 22fr);
+  }
+
+  .analysis-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-areas:
+      "trend trend reason"
+      "trend trend aging";
+  }
+
+  .concentration-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .financial-primary-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
@@ -770,9 +919,41 @@ h2 {
   }
 
   .filter-grid,
-  .charts-grid,
-  .six-card-grid {
+  .analysis-grid,
+  .concentration-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .claims-overview-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    min-height: 0;
+  }
+
+  .claims-overview-trend {
+    grid-column: 1 / -1;
+  }
+
+  .claims-overview-section {
+    padding: 10px 18px 8px;
+  }
+
+  .claims-overview-section + .claims-overview-section {
+    border-left: 1px solid #e7edf4;
+  }
+
+  .claims-overview-reason {
+    border-left: none;
+    border-top: 1px solid #e7edf4;
+  }
+
+  .claims-overview-aging {
+    border-top: 1px solid #e7edf4;
+  }
+
+  .analysis-grid {
+    grid-template-areas:
+      "trend trend"
+      "reason aging";
   }
 
   .donut-layout {
@@ -784,25 +965,58 @@ h2 {
   .metrics-panel {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
-
-  .financial-metrics-panel {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
 }
 
 @media (max-width: 640px) {
   .filter-grid,
-  .charts-grid,
-  .six-card-grid,
+  .analysis-grid,
+  .concentration-grid,
   .date-range {
     grid-template-columns: 1fr;
+  }
+
+  .claims-overview-panel {
+    padding-bottom: 8px;
   }
 
   .metrics-panel {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .financial-metrics-panel {
-    grid-template-columns: repeat(1, minmax(0, 1fr));
+  .financial-primary-grid,
+  .analysis-grid {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "trend"
+      "reason"
+      "aging";
+  }
+
+  .claims-overview-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .claims-overview-section {
+    padding: 12px 18px 10px;
+  }
+
+  .claims-overview-section + .claims-overview-section,
+  .claims-overview-aging,
+  .claims-overview-reason {
+    border-left: none;
+    border-top: 1px solid #e7edf4;
+  }
+
+  .line-chart svg {
+    height: 196px;
+  }
+
+  .trend-head {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .metric-card-primary .metric-value {
+    font-size: 28px;
   }
 }

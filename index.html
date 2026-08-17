@@ -84,59 +84,87 @@
           </div>
         </section>
 
-        <section class="insights-panel">
-          <div class="insights-grid charts-grid trend-top-grid">
-            <article class="insight-card insight-card-wide">
-              <h3>Claims Trend (Selected Date Range)</h3>
-              <div class="line-chart" id="weeklyTrendInsight"></div>
-            </article>
+        <section class="financial-kpi-block">
+          <div class="section-heading section-heading-quiet">
+            <h2>Financial &amp; Operational Impact</h2>
+            <p>Financial KPIs use the full filtered dataset, not just the visible page.</p>
           </div>
+          <section class="financial-primary-grid">
+            <div class="metric-card metric-card-primary metric-card-claimed">
+              <div class="metric-icon blue">$</div>
+              <div class="metric-copy">
+                <div class="metric-value" id="totalClaimedAmountMetric">$0.00</div>
+                <div class="metric-label">Total Claimed Amount</div>
+              </div>
+            </div>
+            <div class="metric-card metric-card-primary metric-card-recovered">
+              <div class="metric-icon green">$</div>
+              <div class="metric-copy">
+                <div class="metric-value" id="totalRecoveredAmountMetric">$0.00</div>
+                <div class="metric-label">Total Recovered Amount</div>
+              </div>
+            </div>
+            <div class="metric-card metric-card-primary metric-card-net-impact">
+              <div class="metric-icon orange">$</div>
+              <div class="metric-copy">
+                <div class="metric-value" id="outstandingExposureMetric">$0.00</div>
+                <div class="metric-label">Net Impact</div>
+              </div>
+            </div>
+            <div class="metric-card metric-card-primary metric-card-rate">
+              <div class="metric-icon teal">%</div>
+              <div class="metric-copy">
+                <div class="metric-value" id="recoveryRateMetric">0.0%</div>
+                <div class="metric-label">Recovery Rate</div>
+              </div>
+            </div>
+          </section>
         </section>
 
-        <section class="metrics-panel" id="metricsPanel">
-          <div class="metric-card">
+        <section class="metrics-panel metrics-panel-secondary" id="metricsPanel">
+          <div class="metric-card metric-card-secondary metric-card-financial-secondary">
+            <div class="metric-icon purple">$</div>
+            <div class="metric-copy">
+              <div class="metric-value" id="avgClaimValuePerTicketMetric">$0.00</div>
+              <div class="metric-label">Average Claim Value per Ticket</div>
+            </div>
+          </div>
+          <div class="metric-card metric-card-secondary metric-card-financial-secondary">
+            <div class="metric-icon royal">#</div>
+            <div class="metric-copy">
+              <div class="metric-value" id="quantityCasesAffectedMetric">0</div>
+              <div class="metric-label">Quantity/Cases Affected</div>
+            </div>
+          </div>
+          <div class="metric-card metric-card-secondary">
             <div class="metric-icon green">▤</div>
             <div class="metric-copy">
               <div class="metric-value" id="totalTicketsMetric">0</div>
               <div class="metric-label">Total Tickets</div>
             </div>
           </div>
-          <div class="metric-card">
-            <div class="metric-icon lime">◫</div>
-            <div class="metric-copy">
-              <div class="metric-value" id="totalLineItemsMetric">0</div>
-              <div class="metric-label">Total Line Items</div>
-            </div>
-          </div>
-          <div class="metric-card">
+          <div class="metric-card metric-card-secondary">
             <div class="metric-icon orange">▣</div>
             <div class="metric-copy">
               <div class="metric-value" id="openTicketsMetric">0</div>
               <div class="metric-label">Open Tickets</div>
             </div>
           </div>
-          <div class="metric-card">
+          <div class="metric-card metric-card-secondary">
             <div class="metric-icon purple">◔</div>
             <div class="metric-copy">
               <div class="metric-value" id="avgDaysOpenMetric">0.0</div>
               <div class="metric-label">Avg Days Open</div>
             </div>
           </div>
-          <div class="metric-card">
+          <div class="metric-card metric-card-secondary">
             <div class="metric-icon teal">◷</div>
             <div class="metric-copy">
               <div class="metric-value" id="avgPoToShipMetric">0.0</div>
               <div class="metric-label">Avg PO-to-Ship Days</div>
             </div>
           </div>
-          <div class="metric-card">
-            <div class="metric-icon blue">◌</div>
-            <div class="metric-copy">
-              <div class="metric-value" id="salesOwnersMetric">0</div>
-              <div class="metric-label">Sales Owners</div>
-            </div>
-          </div>
-          <div class="metric-card">
+          <div class="metric-card metric-card-secondary metric-card-tertiary">
             <div class="metric-icon royal">▥</div>
             <div class="metric-copy">
               <div class="metric-value" id="vendorsMetric">0</div>
@@ -145,84 +173,39 @@
           </div>
         </section>
 
-        <section class="financial-kpi-block">
-          <div class="section-heading">
-            <h2>Financial &amp; Operational Impact</h2>
-            <p>Financial KPIs use the full filtered dataset, not just the visible page.</p>
+        <section class="panel claims-overview-panel">
+          <div class="section-heading claims-overview-heading">
+            <h2>Claims Overview</h2>
           </div>
-          <section class="metrics-panel financial-metrics-panel" id="financialMetricsPanel">
-            <div class="metric-card">
-              <div class="metric-icon green">$</div>
-              <div class="metric-copy">
-                <div class="metric-value" id="totalClaimedAmountMetric">$0.00</div>
-                <div class="metric-label">Total Claimed Amount</div>
-              </div>
-            </div>
-            <div class="metric-card">
-              <div class="metric-icon teal">$</div>
-              <div class="metric-copy">
-                <div class="metric-value" id="totalRecoveredAmountMetric">$0.00</div>
-                <div class="metric-label">Total Recovered Amount</div>
-              </div>
-            </div>
-            <div class="metric-card">
-              <div class="metric-icon orange">$</div>
-              <div class="metric-copy">
-                <div class="metric-value" id="outstandingExposureMetric">$0.00</div>
-                <div class="metric-label">Net Impact</div>
-              </div>
-            </div>
-            <div class="metric-card">
-              <div class="metric-icon purple">$</div>
-              <div class="metric-copy">
-                <div class="metric-value" id="avgClaimValuePerTicketMetric">$0.00</div>
-                <div class="metric-label">Average Claim Value per Ticket</div>
-              </div>
-            </div>
-            <div class="metric-card">
-              <div class="metric-icon blue">%</div>
-              <div class="metric-copy">
-                <div class="metric-value" id="recoveryRateMetric">0.0%</div>
-                <div class="metric-label">Recovery Rate</div>
-              </div>
-            </div>
-            <div class="metric-card">
-              <div class="metric-icon royal">#</div>
-              <div class="metric-copy">
-                <div class="metric-value" id="quantityCasesAffectedMetric">0</div>
-                <div class="metric-label">Quantity/Cases Affected</div>
-              </div>
-            </div>
-          </section>
-        </section>
-
-        <section class="insights-panel">
-          <div class="insights-grid six-card-grid">
-            <article class="insight-card">
+          <div class="claims-overview-grid">
+            <article class="claims-overview-section claims-overview-trend">
+              <div class="line-chart" id="weeklyTrendInsight"></div>
+            </article>
+            <article class="claims-overview-section claims-overview-reason">
               <h3>Claims by Initial Reason</h3>
               <div class="rank-list chart-list" id="initialReasonInsight"></div>
             </article>
-
-            <article class="insight-card">
-              <h3>Top Customers by Claims</h3>
-              <div id="customerInsight"></div>
-            </article>
-
-            <article class="insight-card">
+            <article class="claims-overview-section claims-overview-aging">
               <h3>Aging Buckets (By Open Tickets)</h3>
               <div class="rank-list chart-list" id="agingBucketInsight"></div>
             </article>
+          </div>
+        </section>
 
+        <section class="insights-panel concentration-panel">
+          <div class="insights-grid concentration-grid">
             <article class="insight-card summary-table-card">
-              <h3>Top Warehouses by Claims</h3>
-              <div id="warehouseInsight"></div>
+              <h3>Top Customers by Claims</h3>
+              <div id="customerInsight"></div>
             </article>
-
             <article class="insight-card summary-table-card">
               <h3>Top Vendors by Claims</h3>
               <div id="vendorInsight"></div>
             </article>
-
+            <article class="insight-card summary-table-card">
+              <h3>Top Warehouses by Claims</h3>
+              <div id="warehouseInsight"></div>
+            </article>
             <article class="insight-card summary-table-card">
               <h3>Top Products by Claims</h3>
               <div id="productInsight"></div>

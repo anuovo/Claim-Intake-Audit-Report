@@ -384,11 +384,9 @@ const rowsPerPageSelect = document.getElementById("rowsPerPage");
 
 const metricFields = {
   totalTicketsMetric: document.getElementById("totalTicketsMetric"),
-  totalLineItemsMetric: document.getElementById("totalLineItemsMetric"),
   openTicketsMetric: document.getElementById("openTicketsMetric"),
   avgDaysOpenMetric: document.getElementById("avgDaysOpenMetric"),
   avgPoToShipMetric: document.getElementById("avgPoToShipMetric"),
-  salesOwnersMetric: document.getElementById("salesOwnersMetric"),
   vendorsMetric: document.getElementById("vendorsMetric"),
   totalClaimedAmountMetric: document.getElementById("totalClaimedAmountMetric"),
   totalRecoveredAmountMetric: document.getElementById("totalRecoveredAmountMetric"),
@@ -877,11 +875,9 @@ function updateMetrics() {
       : filteredData.reduce((sum, item) => sum + getPoToShipDays(item), 0) / filteredData.length;
 
   metricFields.totalTicketsMetric.textContent = tickets.length;
-  metricFields.totalLineItemsMetric.textContent = filteredData.length;
   metricFields.openTicketsMetric.textContent = openTickets.length;
   metricFields.avgDaysOpenMetric.textContent = avgDaysOpen.toFixed(1);
   metricFields.avgPoToShipMetric.textContent = avgPoToShip.toFixed(1);
-  metricFields.salesOwnersMetric.textContent = new Set(filteredData.map((item) => item.salesOwner)).size;
   metricFields.vendorsMetric.textContent = new Set(filteredData.map((item) => item.vendor)).size;
 
   const totalClaimedAmount = filteredData.reduce(
