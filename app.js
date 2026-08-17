@@ -389,7 +389,13 @@ const metricFields = {
   avgDaysOpenMetric: document.getElementById("avgDaysOpenMetric"),
   avgPoToShipMetric: document.getElementById("avgPoToShipMetric"),
   salesOwnersMetric: document.getElementById("salesOwnersMetric"),
-  vendorsMetric: document.getElementById("vendorsMetric")
+  vendorsMetric: document.getElementById("vendorsMetric"),
+  totalClaimedAmountMetric: document.getElementById("totalClaimedAmountMetric"),
+  totalRecoveredAmountMetric: document.getElementById("totalRecoveredAmountMetric"),
+  outstandingExposureMetric: document.getElementById("outstandingExposureMetric"),
+  avgClaimValuePerTicketMetric: document.getElementById("avgClaimValuePerTicketMetric"),
+  recoveryRateMetric: document.getElementById("recoveryRateMetric"),
+  quantityCasesAffectedMetric: document.getElementById("quantityCasesAffectedMetric")
 };
 
 const insightTargets = {
@@ -425,12 +431,72 @@ function diffDays(start, end) {
   return Math.round((parseDate(end) - parseDate(start)) / 86400000);
 }
 
+function hashString(value) {
+  return [...String(value)].reduce((accumulator, character) => {
+    return (accumulator * 31 + character.charCodeAt(0)) % 1000003;
+  }, 7);
+}
+
+function roundCurrency(value) {
+  return Math.round(value * 100) / 100;
+}
+
+function formatCurrency(value) {
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  }).format(value || 0);
+}
+
+function formatWholeNumber(value) {
+  return new Intl.NumberFormat("en-US", {
+    maximumFractionDigits: 0
+  }).format(value || 0);
+}
+
+function formatPercentage(value) {
+  return `${(value || 0).toFixed(1)}%`;
+}
+
 function getPoToShipDays(item) {
   return diffDays(item.purchaseOrderDate, item.shipDate);
 }
 
 function getDaysOpen(item) {
   return diffDays(item.ticketCreatedDate, item.closedDate || TODAY);
+}
+
+function getFinancialSnapshot(item) {
+  const seed = hashString(`${item.ticketNumber}-${item.productDescription}-${item.vendor}`);
+  const baseRate = 8.75 + (seed % 700) / 100;
+  const claimedAmount = roundCurrency(item.qty * baseRate);
+
+  const commodityRecoveryRateByStatus = {
+    Closed: 0.76,
+    Approver: 0.58,
+    "Pending Customer Final": 0.46,
+    Open: 0.24
+  };
+
+  const commodityRecoveryRate = commodityRecoveryRateByStatus[item.ticketStatus] ?? 0.3;
+  const commodityRecovery = roundCurrency(
+    claimedAmount * Math.min(0.88, commodityRecoveryRate + ((seed % 9) * 0.015))
+  );
+  const reconsignmentRecovery = roundCurrency(
+    claimedAmount * (((seed >> 3) % 4) * 0.03)
+  );
+  const recoveredAmount = roundCurrency(
+    Math.min(claimedAmount, commodityRecovery + reconsignmentRecovery)
+  );
+  const outstandingExposure = roundCurrency(Math.max(0, claimedAmount - recoveredAmount));
+
+  return {
+    claimedAmount,
+    recoveredAmount,
+    outstandingExposure
+  };
 }
 
 function getTicketMap(data) {
@@ -487,6 +553,11 @@ function sortData() {
     if (key === "daysOpen") {
       leftValue = getDaysOpen(left);
       rightValue = getDaysOpen(right);
+    }
+
+    if (key === "claimedAmount" || key === "recoveredAmount" || key === "outstandingExposure") {
+      leftValue = getFinancialSnapshot(left)[key];
+      rightValue = getFinancialSnapshot(right)[key];
     }
 
     if (typeof leftValue === "number") {
@@ -763,7 +834,6 @@ function renderDonutChart(chartTarget, legendTarget, rows, centerValue, centerLa
 function updateMetrics() {
   const tickets = [...getTicketMap(filteredData).values()];
   const openTickets = tickets.filter((item) => item.ticketStatus !== "Closed");
-  const closedTickets = tickets.filter((item) => item.ticketStatus === "Closed");
   const avgDaysOpen =
     tickets.length === 0
       ? 0
@@ -780,6 +850,29 @@ function updateMetrics() {
   metricFields.avgPoToShipMetric.textContent = avgPoToShip.toFixed(1);
   metricFields.salesOwnersMetric.textContent = new Set(filteredData.map((item) => item.salesOwner)).size;
   metricFields.vendorsMetric.textContent = new Set(filteredData.map((item) => item.vendor)).size;
+
+  const totalClaimedAmount = filteredData.reduce(
+    (sum, item) => sum + getFinancialSnapshot(item).claimedAmount,
+    0
+  );
+  const totalRecoveredAmount = filteredData.reduce(
+    (sum, item) => sum + getFinancialSnapshot(item).recoveredAmount,
+    0
+  );
+  const outstandingExposure = filteredData.reduce(
+    (sum, item) => sum + getFinancialSnapshot(item).outstandingExposure,
+    0
+  );
+  const avgClaimValuePerTicket = tickets.length === 0 ? 0 : totalClaimedAmount / tickets.length;
+  const recoveryRate = totalClaimedAmount === 0 ? 0 : (totalRecoveredAmount / totalClaimedAmount) * 100;
+  const quantityCasesAffected = filteredData.reduce((sum, item) => sum + item.qty, 0);
+
+  metricFields.totalClaimedAmountMetric.textContent = formatCurrency(totalClaimedAmount);
+  metricFields.totalRecoveredAmountMetric.textContent = formatCurrency(totalRecoveredAmount);
+  metricFields.outstandingExposureMetric.textContent = formatCurrency(outstandingExposure);
+  metricFields.avgClaimValuePerTicketMetric.textContent = formatCurrency(avgClaimValuePerTicket);
+  metricFields.recoveryRateMetric.textContent = formatPercentage(recoveryRate);
+  metricFields.quantityCasesAffectedMetric.textContent = formatWholeNumber(quantityCasesAffected);
 }
 
 function updateInsights() {
@@ -802,7 +895,7 @@ function renderTable() {
   tableBody.innerHTML = "";
 
   if (filteredData.length === 0) {
-    tableBody.innerHTML = `<tr><td colspan="14">No flagged ticket line items match the selected filters.</td></tr>`;
+    tableBody.innerHTML = `<tr><td colspan="17">No flagged ticket line items match the selected filters.</td></tr>`;
     tableSummary.textContent = "0 flagged line items";
     paginationSummary.textContent = "Showing 0 to 0 of 0 line items";
     paginationButtons.innerHTML = "";
@@ -814,6 +907,7 @@ function renderTable() {
   const end = start + pageRows.length;
 
   pageRows.forEach((item) => {
+    const financials = getFinancialSnapshot(item);
     const row = document.createElement("tr");
     row.innerHTML = `
       <td>${item.salesOwner}</td>
@@ -828,6 +922,9 @@ function renderTable() {
       <td>${item.vendor}</td>
       <td>${item.commodityManager}</td>
       <td>${getPoToShipDays(item)}</td>
+      <td>${formatCurrency(financials.claimedAmount)}</td>
+      <td>${formatCurrency(financials.recoveredAmount)}</td>
+      <td>${formatCurrency(financials.outstandingExposure)}</td>
       <td>${item.ticketStatus}</td>
       <td>${getDaysOpen(item)}</td>
     `;
@@ -900,6 +997,9 @@ function exportRows(format) {
     "Vendor",
     "Commodity Manager",
     "PO-to-Ship Days",
+    "Claimed Amount",
+    "Recovered Amount",
+    "Outstanding Exposure",
     "Ticket Status",
     "Days Open",
     "Initial Reason"
@@ -918,6 +1018,9 @@ function exportRows(format) {
     item.vendor,
     item.commodityManager,
     getPoToShipDays(item),
+    formatCurrency(getFinancialSnapshot(item).claimedAmount),
+    formatCurrency(getFinancialSnapshot(item).recoveredAmount),
+    formatCurrency(getFinancialSnapshot(item).outstandingExposure),
     item.ticketStatus,
     getDaysOpen(item),
     item.initialReason

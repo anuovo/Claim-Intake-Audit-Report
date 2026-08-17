@@ -163,6 +163,26 @@ select {
   padding: 4px 0;
 }
 
+.financial-kpi-block {
+  margin-bottom: 16px;
+}
+
+.section-heading {
+  margin: 0 0 10px;
+}
+
+.section-heading h2 {
+  color: #223043;
+  font-size: 18px;
+  margin: 0 0 4px;
+}
+
+.section-heading p {
+  color: #667085;
+  font-size: 13px;
+  margin: 0;
+}
+
 .metric-card {
   align-items: center;
   background: transparent;
@@ -219,6 +239,10 @@ select {
   font-weight: 600;
   margin-top: 0;
   white-space: nowrap;
+}
+
+.financial-metrics-panel {
+  grid-template-columns: repeat(6, minmax(0, 1fr));
 }
 
 .insights-grid {
@@ -715,6 +739,10 @@ h2 {
   .metrics-panel {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
+
+  .financial-metrics-panel {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 640px) {
@@ -727,5 +755,9 @@ h2 {
 
   .metrics-panel {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .financial-metrics-panel {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
   }
 }
