@@ -233,6 +233,51 @@ select {
   min-height: 24px;
 }
 
+.net-impact {
+  align-items: baseline;
+  display: inline-flex;
+  gap: 6px;
+}
+
+.net-impact-label {
+  font-weight: 700;
+}
+
+.net-impact-amount {
+  font-weight: 700;
+}
+
+.net-impact-gain {
+  color: #1f8f43;
+}
+
+.net-impact-loss {
+  color: #d92d20;
+}
+
+.net-impact-even {
+  color: #667085;
+}
+
+.net-impact-kpi {
+  display: grid;
+  gap: 2px;
+}
+
+.net-impact-kpi .net-impact-label {
+  font-size: 13px;
+  line-height: 1;
+}
+
+.net-impact-kpi .net-impact-amount {
+  font-size: 20px;
+  line-height: 1;
+}
+
+.net-impact-table {
+  font-size: 13px;
+}
+
 .metric-label {
   color: #425166;
   font-size: 12px;

@@ -460,6 +460,39 @@ function formatPercentage(value) {
   return `${(value || 0).toFixed(1)}%`;
 }
 
+function getNetImpactState(value) {
+  if (value > 0.004) {
+    return "gain";
+  }
+  if (value < -0.004) {
+    return "loss";
+  }
+  return "even";
+}
+
+function formatNetImpactLabel(value) {
+  const state = getNetImpactState(value);
+  if (state === "gain") {
+    return `Gain ${formatCurrency(value)}`;
+  }
+  if (state === "loss") {
+    return `Loss ${formatCurrency(Math.abs(value))}`;
+  }
+  return "Even $0.00";
+}
+
+function renderNetImpactMarkup(value, variant = "table") {
+  const state = getNetImpactState(value);
+  const label = state === "gain" ? "Gain" : state === "loss" ? "Loss" : "Even";
+  const amount = state === "even" ? "$0.00" : formatCurrency(Math.abs(value));
+  return `
+    <span class="net-impact net-impact-${variant} net-impact-${state}">
+      <span class="net-impact-label">${label}</span>
+      <span class="net-impact-amount">${amount}</span>
+    </span>
+  `;
+}
+
 function getPoToShipDays(item) {
   return diffDays(item.purchaseOrderDate, item.shipDate);
 }
@@ -490,12 +523,12 @@ function getFinancialSnapshot(item) {
   const recoveredAmount = roundCurrency(
     Math.min(claimedAmount, commodityRecovery + reconsignmentRecovery)
   );
-  const outstandingExposure = roundCurrency(Math.max(0, claimedAmount - recoveredAmount));
+  const netImpact = roundCurrency(recoveredAmount - claimedAmount);
 
   return {
     claimedAmount,
     recoveredAmount,
-    outstandingExposure
+    outstandingExposure: netImpact
   };
 }
 
@@ -869,7 +902,7 @@ function updateMetrics() {
 
   metricFields.totalClaimedAmountMetric.textContent = formatCurrency(totalClaimedAmount);
   metricFields.totalRecoveredAmountMetric.textContent = formatCurrency(totalRecoveredAmount);
-  metricFields.outstandingExposureMetric.textContent = formatCurrency(outstandingExposure);
+  metricFields.outstandingExposureMetric.innerHTML = renderNetImpactMarkup(outstandingExposure, "kpi");
   metricFields.avgClaimValuePerTicketMetric.textContent = formatCurrency(avgClaimValuePerTicket);
   metricFields.recoveryRateMetric.textContent = formatPercentage(recoveryRate);
   metricFields.quantityCasesAffectedMetric.textContent = formatWholeNumber(quantityCasesAffected);
@@ -924,7 +957,7 @@ function renderTable() {
       <td>${getPoToShipDays(item)}</td>
       <td>${formatCurrency(financials.claimedAmount)}</td>
       <td>${formatCurrency(financials.recoveredAmount)}</td>
-      <td>${formatCurrency(financials.outstandingExposure)}</td>
+      <td>${renderNetImpactMarkup(financials.outstandingExposure)}</td>
       <td>${item.ticketStatus}</td>
       <td>${getDaysOpen(item)}</td>
     `;
@@ -1020,7 +1053,7 @@ function exportRows(format) {
     getPoToShipDays(item),
     formatCurrency(getFinancialSnapshot(item).claimedAmount),
     formatCurrency(getFinancialSnapshot(item).recoveredAmount),
-    formatCurrency(getFinancialSnapshot(item).outstandingExposure),
+    formatNetImpactLabel(getFinancialSnapshot(item).outstandingExposure),
     item.ticketStatus,
     getDaysOpen(item),
     item.initialReason
